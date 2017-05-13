@@ -4,9 +4,9 @@ import models.Advert
 import play.api.mvc._
 import play.api.libs.json._
 
-class CarsController extends Controller {
+class AdvertsController extends Controller {
 
-  def index = Action {
+ def get = Action {
     Ok(???)
   }
 

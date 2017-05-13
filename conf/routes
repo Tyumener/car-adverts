@@ -3,8 +3,8 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.CarsController.index
-GET     /:id                        controllers.CarsController.get(id: Int)
-POST    /                           controllers.CarsController.add(advert: Advert)
-PUT     /:id                        controllers.CarsController.edit(id: Int, advert: Advert)
-DELETE  /:id                        controllers.CarsController.delete(id: Int)
+GET     /                           controllers.AdvertsController.get
+GET     /:id                        controllers.AdvertsController.get(id: Int)
+POST    /                           controllers.AdvertsController.add(advert: Advert)
+PUT     /:id                        controllers.AdvertsController.edit(id: Int, advert: Advert)
+DELETE  /:id                        controllers.AdvertsController.delete(id: Int)
