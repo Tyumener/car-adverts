@@ -1,20 +1,22 @@
 package controllers
 
+import javax.inject.Inject
+
 import models.Advert
-import models.dao.AdvertsDAO
 import play.api.mvc._
 import play.api.libs.json._
+import services.DataService
 
-class AdvertsController extends Controller {
+class AdvertsController @Inject() (dateService: DataService[Advert]) extends Controller {
 
   def getAll = Action {
-    var adverts = AdvertsDAO.get
+    var adverts = dateService.get
     val json = Json.toJson(adverts.map{a => Json.toJson(a)})
     Ok(json)
   }
 
   def get(id: Int) = Action {
-    AdvertsDAO.get(id) match {
+    dateService.get(id) match {
       case Some(advert) =>
         val json = Json.toJson(advert)
         Ok(json)
@@ -29,7 +31,7 @@ class AdvertsController extends Controller {
       error => BadRequest(Json.obj("Error" -> JsError.toJson(error))),
       advert => {
         val advert = request.body.as[Advert]
-        AdvertsDAO.add(advert) match {
+        dateService.add(advert) match {
           case None =>
             Created.withHeaders(LOCATION -> routes.AdvertsController.get(advert.id).absoluteURL)
           case Some(errorMessage) =>
@@ -41,10 +43,10 @@ class AdvertsController extends Controller {
 
   def edit(id: Int) = Action(parse.json) { implicit request =>
     request.body.validate[Advert].fold(
-      error => BadRequest(Json.obj("err" -> "Json was not correct")),
+      error => BadRequest(Json.obj("Error" -> "Json was not correct")),
       advert => {
         val advert = request.body.as[Advert]
-        AdvertsDAO.edit(id, advert) match {
+        dateService.edit(id, advert) match {
           case None =>
             NotFound
           case Some(_) =>
@@ -55,7 +57,7 @@ class AdvertsController extends Controller {
   }
 
   def delete(id: Int) = Action {
-    AdvertsDAO.delete(id)
+    dateService.delete(id)
     NoContent
   }
 }

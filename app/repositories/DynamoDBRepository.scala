@@ -1,18 +1,15 @@
-package models.dao
+package repositories
 
-import models.Advert
-import org.joda.time.DateTime
-import scala.collection.mutable
-import scala.collection.JavaConversions._
 import com.amazonaws.regions.Regions
-import com.amazonaws.services.dynamodbv2._
-import com.amazonaws.services.dynamodbv2.document.spec.PutItemSpec
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder
 import com.amazonaws.services.dynamodbv2.document.{DynamoDB, Item}
+import com.amazonaws.services.dynamodbv2.document.spec.PutItemSpec
 import com.amazonaws.services.dynamodbv2.model.ScanRequest
-import play.api.libs.json._
+import scala.collection.JavaConversions._
+import models.Advert
+import play.api.libs.json.Json
 
-
-object AdvertsDAO {
+class DynamoDBRepository extends Repository[Advert] {
   val client = AmazonDynamoDBClientBuilder.standard()
     .withRegion(Regions.EU_CENTRAL_1)
     .build();
@@ -20,15 +17,7 @@ object AdvertsDAO {
   val tableName = "adverts"
   val table = dynamodb.getTable(tableName)
 
-  // Temporary in-memory repository
-  var adverts = mutable.Buffer[Advert] (
-    new Advert(1, "Audi A4", "gasoline", 10000, false, Option(100000), Option(DateTime.parse("2010"))),
-    new Advert(2, "BMW 5", "gasoline", 15000, false, Option(120000), Option(DateTime.parse("2009"))),
-    new Advert(3, "Volkswagen Touran", "diesel", 4500, false, Option(140000), Option(DateTime.parse("2004"))),
-    new Advert(4, "Opel Astra", "gasoline", 20000, true)
-  )
-
-  def add(advert: Advert) : Option[String] = {
+  override def add(advert: Advert): Option[String] = {
     var advertJson = Json.toJson(advert).toString()
     val item = new Item()
       .withPrimaryKey("id", advert.id)
@@ -44,7 +33,7 @@ object AdvertsDAO {
     }
   }
 
-  def edit(id: Int, advert: Advert): Option[Advert] = {
+  override def edit(id: Int, advert: Advert): Option[Advert] = {
     get(id) match {
       case None =>
         None
@@ -59,11 +48,11 @@ object AdvertsDAO {
     }
   }
 
-  def delete(id: Int) = {
+  override def delete(id: Int): Unit = {
     table.deleteItem("id", id)
   }
 
-  def get(): List[Advert] = {
+  override def get(): List[Advert] = {
     val scanRequest = new ScanRequest().withTableName(tableName)
     val scanResult = client.scan(scanRequest)
     // Had to get every item separately, because it's not trivial at all to get a json value of an attribute when scanning
@@ -71,7 +60,7 @@ object AdvertsDAO {
     adverts.toList
   }
 
-  def get(id: Int): Option[Advert] = {
+  override def get(id: Int): Option[Advert] = {
     table.getItem("id", id) match {
       case null =>
         None
