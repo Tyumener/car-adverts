@@ -53,6 +53,8 @@ object Advert {
     (JsPath \ "mileage").readNullable[Int] and
     (JsPath \ "firstRegistration").readNullable[DateTime](jodaDateReads)
   )(Advert.apply _)
+    .filterNot(ValidationError("New car can't have mileage and/or first registration defined"))(f =>
+    (f.isNew && f.mileage.isDefined) || (f.isNew && f.firstRegistration.isDefined))
 
 
 //  val jodaDateReads = Reads[DateTime](js =>
