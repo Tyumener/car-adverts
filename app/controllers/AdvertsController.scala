@@ -29,8 +29,12 @@ class AdvertsController extends Controller {
       error => BadRequest(Json.obj("Error" -> JsError.toJson(error))),
       advert => {
         val advert = request.body.as[Advert]
-        AdvertsDAO.add(advert)
-        Created.withHeaders(LOCATION -> routes.AdvertsController.get(advert.id).absoluteURL)
+        AdvertsDAO.add(advert) match {
+          case None =>
+            Created.withHeaders(LOCATION -> routes.AdvertsController.get(advert.id).absoluteURL)
+          case Some(errorMessage) =>
+            BadRequest(errorMessage)
+        }
       }
     )
   }
@@ -40,8 +44,12 @@ class AdvertsController extends Controller {
       error => BadRequest(Json.obj("err" -> "Json was not correct")),
       advert => {
         val advert = request.body.as[Advert]
-        AdvertsDAO.edit(id, advert)
-        NoContent
+        AdvertsDAO.edit(id, advert) match {
+          case None =>
+            NotFound
+          case Some(_) =>
+            NoContent
+        }
       }
     )
   }
