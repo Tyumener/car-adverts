@@ -20,7 +20,7 @@ class AdvertsController extends Controller {
 
   def add = Action(parse.json) { implicit request =>
     request.body.validate[Advert].fold(
-      error => BadRequest(Json.obj("err" -> "Json was not correct")),
+      error => BadRequest(Json.obj("Error" -> JsError.toJson(error))),
       advert => {
         val advert = request.body.as[Advert]
         AdvertsDAO.add(advert)
