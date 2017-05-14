@@ -24,7 +24,7 @@ class AdvertsController extends Controller {
       advert => {
         val advert = request.body.as[Advert]
         AdvertsDAO.add(advert)
-        Created
+        Created.withHeaders(LOCATION -> routes.AdvertsController.get(advert.id).absoluteURL)
       }
     )
   }
