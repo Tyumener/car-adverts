@@ -14,8 +14,14 @@ class AdvertsController extends Controller {
   }
 
   def get(id: Int) = Action {
-    val json = Json.toJson(AdvertsDAO.get(id))
-    Ok(json)
+    AdvertsDAO.get(id) match {
+      case Some(advert) =>
+        val json = Json.toJson(advert)
+        Ok(json)
+      case None =>
+        val json = Json.obj("Error" -> "Not found")
+        NotFound(json)
+    }
   }
 
   def add = Action(parse.json) { implicit request =>

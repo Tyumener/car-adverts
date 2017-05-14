@@ -19,23 +19,29 @@ object AdvertsDAO {
   }
 
   def edit(id: Int, advert: Advert) = {
-    val existingAdvert = adverts.filter(_.id == id).head
-    val indexOfExistingAdvert = adverts.indexOf(existingAdvert)
-    adverts(indexOfExistingAdvert) = advert
+    adverts.filter(_.id == id).lift(0) match {
+      case Some(advert) =>
+        val indexOfExistingAdvert = adverts.indexOf(advert)
+        adverts(indexOfExistingAdvert) = advert
+      case _ =>
+    }
   }
 
   def delete(id: Int) = {
-    val existingAdvert = adverts.filter(_.id == id).head
-    val indexOfExistingAdvert = adverts.indexOf(existingAdvert)
-    adverts.remove(indexOfExistingAdvert)
+    adverts.filter(_.id == id).lift(0) match {
+      case Some(advert) =>
+        val indexOfExistingAdvert = adverts.indexOf(advert)
+        adverts.remove(indexOfExistingAdvert)
+      case _ =>
+    }
   }
 
   def get(): List[Advert] = {
     adverts.toList
   }
 
-  def get(id: Int): Advert = {
-    val existingAdvert = adverts.filter(_.id == id).head
+  def get(id: Int): Option[Advert] = {
+    val existingAdvert = adverts.filter(_.id == id).lift(0)
     existingAdvert
   }
 }
