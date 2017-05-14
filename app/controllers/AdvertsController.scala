@@ -33,7 +33,13 @@ class AdvertsController @Inject() (dateService: DataService[Advert]) extends Con
         val advert = request.body.as[Advert]
         dateService.add(advert) match {
           case None =>
-            Created.withHeaders(LOCATION -> routes.AdvertsController.get(advert.id).absoluteURL)
+            try{
+              val url = routes.AdvertsController.get(advert.id).absoluteURL
+              Created.withHeaders(LOCATION -> url)
+            }
+            catch {
+              case _ => Created
+            }
           case Some(errorMessage) =>
             BadRequest(errorMessage)
         }
