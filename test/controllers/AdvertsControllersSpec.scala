@@ -1,6 +1,7 @@
+package controllers
+
 import javax.inject.Inject
 
-import controllers.AdvertsController
 import models.Advert
 import org.joda.time.DateTime
 import org.junit.runner._

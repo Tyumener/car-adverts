@@ -3,8 +3,8 @@
 # ~~~~
 
 # Home page
-GET     /adverts                            controllers.AdvertsController.getAll
-GET     /adverts/                           controllers.AdvertsController.getAll
+GET     /adverts                            controllers.AdvertsController.getAll(sortBy: Option[String])
+GET     /adverts/                           controllers.AdvertsController.getAll(sortBy: Option[String])
 GET     /adverts/:id                        controllers.AdvertsController.get(id: Int)
 POST    /adverts                            controllers.AdvertsController.add
 POST    /adverts/                           controllers.AdvertsController.add
