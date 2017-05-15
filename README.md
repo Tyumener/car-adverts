@@ -55,9 +55,7 @@ curl -v -X DELETE http://ec2-52-57-155-217.eu-central-1.compute.amazonaws.com:90
 1. Clone the repository.
 2. Install latest versions of JDK and SBT
 3. Create a file with AWS credentials as described [here](http://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html).
-Use the following information:
-    * aws_access_key_id = AKIAI3ORLAM7J54GNIQQ
-    * aws_secret_access_key = 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
+Please contact me to get the values for "aws_access_key_id" and "aws_secret_access_key".
 4. Open the directory with the application
 5. Run:
 ```
