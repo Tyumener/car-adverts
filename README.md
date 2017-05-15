@@ -7,7 +7,7 @@ The application is deployed on AWS.
 ## Constraints
 * Scala as a programming
 * Play 2.4.x as a web framework
-* DynamoDB for persistante storage
+* DynamoDB for a persistence storage
 
 ## Assumptions
 * The application is a prototype
@@ -17,7 +17,7 @@ The application is deployed on AWS.
 * The application is to be used internally by a small group of people: 
     * No Authentication and Authorization is required
 * The application should not be designed for high load and high data volumes, therefore it's:
-    * Not necessary to use async communication with a persisten storage
+    * Not necessary to use async communication with a persistence storage
     * Not necessary to use server-side caching
     * Data can be sorted in memory on the server
 
@@ -73,7 +73,7 @@ curl -v -X DELETE http://ec2-52-57-155-217.eu-central-1.compute.amazonaws.com:90
 * data is stored in the DynamoDB table
 
 ### Possible future features
-* Pagination for the GET /adverts endpoint. Would be nice to introcude optional parameters: page size and page nubmer
+* Pagination for the GET /adverts endpoint. Would be nice to introduce optional parameters: page size and page number
 * Descending order sorting for the GET /adverts endpoint
 * Local caching for the GET requests 
 * [HATEOS](https://en.wikipedia.org/wiki/HATEOAS) 
