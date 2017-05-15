@@ -50,7 +50,7 @@ class AdvertsController @Inject() (dateService: DataService[Advert]) extends Con
     NoContent
   }
 
-  def getAll(sortBy: Option[String]) = Action {
+  def getAll(sortBy: Option[String] = Some("id")) = Action {
     // This code is supper smelly and needs to be rewritten
     sortBy match {
       case Some("id") =>

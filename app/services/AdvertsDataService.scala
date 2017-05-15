@@ -28,6 +28,10 @@ class AdvertsDataService @Inject()(repository: Repository[Advert]) extends DataS
     repository.delete(id)
   }
 
+  def getAll() : List[Advert] = {
+    getAllSortInt(a => a.id)
+  }
+
   def getAllSortInt(f: Advert => Int): List[Advert] = {
     repository.get.sortBy(f)
   }
