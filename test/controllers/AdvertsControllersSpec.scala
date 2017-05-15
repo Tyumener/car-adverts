@@ -18,9 +18,9 @@ class AdvertsControllersSpec @Inject()() extends Specification with Mockito {
 
   "AdvertsController" should {
 
-    //"send 404 on a bad request" in new WithApplication{
-    //  route(FakeRequest(GET, "/boum")) must beSome.which (status(_) == NOT_FOUND)
-    //}
+    "send 404 on a bad request" in new WithApplication{
+      route(FakeRequest(GET, "/boum")) must beSome.which (status(_) == NOT_FOUND)
+    }
 
     "should return all adverts when asked to" in new WithApplication{
       val mockDataService = mock[DataService[Advert]]

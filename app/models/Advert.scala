@@ -56,11 +56,4 @@ object Advert {
     .filterNot(ValidationError("New car can't have mileage and/or first registration defined"))(f =>
     (f.isNew && f.mileage.isDefined) || (f.isNew && f.firstRegistration.isDefined))
 
-
-//  val jodaDateReads = Reads[DateTime](js =>
-//    js.validate[String].map[DateTime](dtString =>
-//      DateTime.parse(dtString)
-//    )
-//  )
-
 }
