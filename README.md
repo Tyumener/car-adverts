@@ -79,6 +79,8 @@ curl -v -X DELETE http://ec2-52-57-155-217.eu-central-1.compute.amazonaws.com:90
 * [HATEOS](https://en.wikipedia.org/wiki/HATEOAS) 
 * Clean the codebase
     * Implement Unit of work pattern to support transactions
+    * Impletemt the rest of tests
+    * Configure Sonarqube and run the analysis of the codebase
 
 ## How to run locally
 
