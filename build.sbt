@@ -6,13 +6,13 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.11.8"
 
-libraryDependencies += "com.amazonaws" % "aws-java-sdk" % "1.11.127"
-
 libraryDependencies ++= Seq(
   jdbc,
   cache,
   ws,
-  specs2 % Test
+  specs2 % Test,
+  filters,
+  "com.amazonaws" % "aws-java-sdk" % "1.11.127"
 )
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
